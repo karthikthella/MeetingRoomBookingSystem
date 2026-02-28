@@ -1,13 +1,9 @@
 package com.epam.meetingroom.dto;
 
-import com.epam.meetingroom.domain.enums.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.epam.meetingroom.entity.enums.Role;
 
-@Data
-@AllArgsConstructor
-public class AuthResponse {
-    private String token;
-    private String username;
-    private Role role;
-}
+public record AuthResponse(
+    String token,
+    String username,
+    Role role
+) {}

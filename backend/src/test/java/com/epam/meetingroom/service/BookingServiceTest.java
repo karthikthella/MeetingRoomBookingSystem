@@ -1,16 +1,15 @@
 package com.epam.meetingroom.service;
 
-import com.epam.meetingroom.domain.enums.BookingStatus;
-import com.epam.meetingroom.domain.model.Booking;
-import com.epam.meetingroom.domain.model.Room;
-import com.epam.meetingroom.domain.model.User;
+import com.epam.meetingroom.entity.enums.BookingStatus;
+import com.epam.meetingroom.entity.Booking;
+import com.epam.meetingroom.entity.Room;
+import com.epam.meetingroom.entity.User;
 import com.epam.meetingroom.dto.BookingRequestDto;
 import com.epam.meetingroom.dto.BookingResponseDto;
 import com.epam.meetingroom.mapper.BookingMapper;
 import com.epam.meetingroom.repository.BookingRepository;
 import com.epam.meetingroom.repository.RoomRepository;
 import com.epam.meetingroom.repository.UserRepository;
-import com.epam.meetingroom.service.impl.BookingServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +38,7 @@ public class BookingServiceTest {
     private BookingMapper bookingMapper;
 
     @InjectMocks
-    private BookingServiceImpl bookingService;
+    private BookingService bookingService;
 
     private User user;
     private Room room;
@@ -50,12 +49,13 @@ public class BookingServiceTest {
         user = User.builder().id(1L).username("testuser").build();
         room = Room.builder().id(1L).name("Conference Room").build();
         
-        request = new BookingRequestDto();
-        request.setRoomId(1L);
-        request.setDate(LocalDate.now().plusDays(1));
-        request.setStartTime(LocalTime.of(10, 0));
-        request.setEndTime(LocalTime.of(11, 0));
-        request.setAgenda("Test Agenda");
+        request = new BookingRequestDto(
+            1L,
+            LocalDate.now().plusDays(1),
+            LocalTime.of(10, 0),
+            LocalTime.of(11, 0),
+            "Test Agenda"
+        );
     }
 
     @Test
@@ -63,7 +63,9 @@ public class BookingServiceTest {
         when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(user));
         when(roomRepository.findById(1L)).thenReturn(Optional.of(room));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(i -> i.getArguments()[0]);
-        when(bookingMapper.toDto(any(Booking.class))).thenReturn(new BookingResponseDto());
+        // BookingResponseDto is also a record now
+        BookingResponseDto response = new BookingResponseDto(1L, 1L, "Room", 1L, "user", LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(1), "Agenda", BookingStatus.PENDING, 60L);
+        when(bookingMapper.toDto(any(Booking.class))).thenReturn(response);
 
         BookingResponseDto result = bookingService.createBooking(request, "testuser");
 
@@ -73,16 +75,28 @@ public class BookingServiceTest {
 
     @Test
     void testCreateBooking_DurationTooShort() {
-        request.setEndTime(request.getStartTime().plusMinutes(5));
+        BookingRequestDto shortRequest = new BookingRequestDto(
+            1L,
+            LocalDate.now().plusDays(1),
+            LocalTime.of(10, 0),
+            LocalTime.of(10, 5),
+            "Test Agenda"
+        );
         
-        assertThrows(RuntimeException.class, () -> bookingService.createBooking(request, "testuser"));
+        assertThrows(RuntimeException.class, () -> bookingService.createBooking(shortRequest, "testuser"));
     }
 
     @Test
     void testCreateBooking_PastDate() {
-        request.setDate(LocalDate.now().minusDays(1));
+        BookingRequestDto pastRequest = new BookingRequestDto(
+            1L,
+            LocalDate.now().minusDays(1),
+            LocalTime.of(10, 0),
+            LocalTime.of(11, 0),
+            "Test Agenda"
+        );
         
-        assertThrows(RuntimeException.class, () -> bookingService.createBooking(request, "testuser"));
+        assertThrows(RuntimeException.class, () -> bookingService.createBooking(pastRequest, "testuser"));
     }
 
     @Test
@@ -90,9 +104,9 @@ public class BookingServiceTest {
         Booking booking = Booking.builder()
                 .id(1L)
                 .room(room)
-                .date(request.getDate())
-                .startTime(request.getStartTime())
-                .endTime(request.getEndTime())
+                .date(request.date())
+                .startTime(request.startTime())
+                .endTime(request.endTime())
                 .status(BookingStatus.PENDING)
                 .build();
 

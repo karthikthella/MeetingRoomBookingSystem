@@ -1,6 +1,6 @@
 package com.epam.meetingroom.repository;
 
-import com.epam.meetingroom.domain.model.User;
+import com.epam.meetingroom.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.epam.meetingroom.mapper;
 
-import com.epam.meetingroom.domain.model.Room;
+import com.epam.meetingroom.entity.Room;
 import com.epam.meetingroom.dto.RoomDto;
 import org.mapstruct.Mapper;
 

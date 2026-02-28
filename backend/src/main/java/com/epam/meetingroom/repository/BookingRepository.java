@@ -1,9 +1,9 @@
 package com.epam.meetingroom.repository;
 
-import com.epam.meetingroom.domain.enums.BookingStatus;
-import com.epam.meetingroom.domain.model.Booking;
-import com.epam.meetingroom.domain.model.Room;
-import com.epam.meetingroom.domain.model.User;
+import com.epam.meetingroom.entity.enums.BookingStatus;
+import com.epam.meetingroom.entity.Booking;
+import com.epam.meetingroom.entity.Room;
+import com.epam.meetingroom.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +19,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByUserOrderByDateDescStartTimeDesc(User user);
     
     List<Booking> findByStatus(BookingStatus status);
+    
+    List<Booking> findByRoom(Room room);
+
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.transaction.annotation.Transactional
+    @Query("DELETE FROM Booking b WHERE b.room = :room")
+    void deleteByRoom(@Param("room") Room room);
     
     List<Booking> findByRoomAndStatus(Room room, BookingStatus status);
 

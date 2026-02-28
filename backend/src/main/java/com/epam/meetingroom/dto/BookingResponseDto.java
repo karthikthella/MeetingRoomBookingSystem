@@ -1,22 +1,28 @@
 package com.epam.meetingroom.dto;
 
-import com.epam.meetingroom.domain.enums.BookingStatus;
-import lombok.Data;
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.epam.meetingroom.entity.enums.BookingStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Data
-public class BookingResponseDto {
-    private Long id;
-    private Long roomId;
-    private String roomName;
-    private Long userId;
-    private String username;
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private String agenda;
-    private BookingStatus status;
-    private Long durationMinutes;
-}
+public record BookingResponseDto(
+    Long id,
+    Long roomId,
+    String roomName,
+    Long userId,
+    String username,
+
+    @Schema(example = "2026-12-31", type = "string")
+    LocalDate date,
+
+    @Schema(example = "09:00:00", type = "string")
+    LocalTime startTime,
+
+    @Schema(example = "10:00:00", type = "string")
+    LocalTime endTime,
+
+    String agenda,
+    BookingStatus status,
+    Long durationMinutes
+) {}

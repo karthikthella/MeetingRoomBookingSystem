@@ -1,6 +1,6 @@
 package com.epam.meetingroom.controller;
 
-import com.epam.meetingroom.domain.enums.BookingStatus;
+import com.epam.meetingroom.entity.enums.BookingStatus;
 import com.epam.meetingroom.dto.BookingRequestDto;
 import com.epam.meetingroom.dto.BookingResponseDto;
 import com.epam.meetingroom.service.BookingService;
@@ -44,11 +44,12 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.updateBooking(id, request, authentication.getName()));
     }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Cancel a booking")
-    public ResponseEntity<Void> cancelBooking(@PathVariable Long id, Authentication authentication) {
-        bookingService.cancelBooking(id, authentication.getName());
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/{id}/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Physically delete a booking (Admin Only)")
+    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/my")

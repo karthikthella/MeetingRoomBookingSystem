@@ -1,6 +1,6 @@
 package com.epam.meetingroom.security.jwt;
 
-import com.epam.meetingroom.security.service.UserDetailsServiceImpl;
+import com.epam.meetingroom.service.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

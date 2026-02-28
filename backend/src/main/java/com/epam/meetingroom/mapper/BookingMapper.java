@@ -1,6 +1,6 @@
 package com.epam.meetingroom.mapper;
 
-import com.epam.meetingroom.domain.model.Booking;
+import com.epam.meetingroom.entity.Booking;
 import com.epam.meetingroom.dto.BookingResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
