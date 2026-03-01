@@ -1,0 +1,170 @@
+/* App-wide Styles */
+
+main {
+  min-height: calc(100vh - 320px);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Grid layouts */
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Flex utilities */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+/* Spacing utilities */
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+/* Typography utilities */
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-black {
+  font-weight: 900;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.tracking-widest {
+  letter-spacing: 0.1em;
+}
+
+/* Border utilities */
+.border {
+  border: 1px solid var(--border);
+}
+
+.border-t {
+  border-top: 1px solid var(--border);
+}
+
+.border-b {
+  border-bottom: 1px solid var(--border);
+}
+
+.border-l {
+  border-left: 1px solid var(--border);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-background {
+  background-color: var(--background);
+}
+
+/* Icons with hover effects */
+svg {
+  transition: color 0.2s ease;
+}
+
+/* Error and success messages */
+.error-message {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+}
+
+.success-message {
+  background-color: #dcfce7;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  main {
+    padding: 1.5rem 0;
+  }
+
+  .grid-auto-fit {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    gap: 1.5rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

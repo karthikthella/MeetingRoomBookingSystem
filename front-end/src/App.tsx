@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Layout from './layouts/Layout';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -22,38 +23,40 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode, adminOnly?: boolean 
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            
-            {/* Protected User Routes */}
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            } />
-            <Route path="/my-bookings" element={
-              <ProtectedRoute>
-                <MyBookings />
-              </ProtectedRoute>
-            } />
-            
-            {/* Admin Routes */}
-            <Route path="/admin" element={
-              <ProtectedRoute adminOnly>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } />
-            
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              
+              {/* Protected User Routes */}
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              } />
+              <Route path="/my-bookings" element={
+                <ProtectedRoute>
+                  <MyBookings />
+                </ProtectedRoute>
+              } />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={
+                <ProtectedRoute adminOnly>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 

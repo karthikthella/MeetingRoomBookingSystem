@@ -101,23 +101,34 @@ const AdminDashboard: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 pb-8 border-b-2 border-border">
         <div>
           <h1 className="heading-1 flex items-center gap-4">
-            <ShieldAlert className="text-primary" size={48} strokeWidth={3} />
+            <div className="p-3 bg-gradient-to-br from-accent-purple/20 to-accent-pink/20 rounded-lg">
+              <ShieldAlert className="text-accent-purple" size={48} strokeWidth={3} />
+            </div>
             ADMIN PANEL
           </h1>
-          <p className="text-muted font-black uppercase tracking-widest text-sm">Operations Control & Resource Provisioning</p>
+          <p className="text-muted font-black uppercase tracking-widest text-sm flex items-center gap-2 mt-2">
+            <span className="h-2 w-2 bg-accent-pink rounded-full animate-pulse"></span>
+            Operations Control & Resource Provisioning
+          </p>
         </div>
-        <div className="flex gap-2 p-2 bg-black border-2 border-border rounded-lg shadow-inner">
+        <div className="flex gap-3 p-4 bg-gradient-to-r from-primary/10 to-purple-500/10 border-2 border-border rounded-2xl shadow-lg">
           <button 
             onClick={() => setActiveTab('bookings')}
-            className={`px-8 py-3 rounded text-xs font-black transition-all ${activeTab === 'bookings' ? 'bg-primary text-white shadow-lg' : 'text-muted hover:text-white'}`}
+            className={`flex-1 px-8 py-4 rounded-lg text-sm font-black transition-all transform ${activeTab === 'bookings' ? 'gradient-blue-cyan text-white shadow-xl scale-105' : 'text-muted hover:text-accent-blue bg-white/40'}`}
           >
-            APPROVE REQUESTS
+            <span className="flex items-center justify-center gap-2">
+              <Calendar size={20} />
+              APPROVE REQUESTS
+            </span>
           </button>
           <button 
             onClick={() => setActiveTab('rooms')}
-            className={`px-8 py-3 rounded text-xs font-black transition-all ${activeTab === 'rooms' ? 'bg-primary text-white shadow-lg' : 'text-muted hover:text-white'}`}
+            className={`flex-1 px-8 py-4 rounded-lg text-sm font-black transition-all transform ${activeTab === 'rooms' ? 'gradient-purple-pink text-white shadow-xl scale-105' : 'text-muted hover:text-accent-purple bg-white/40'}`}
           >
-            MANAGE ROOMS
+            <span className="flex items-center justify-center gap-2">
+              <Building2 size={20} />
+              MANAGE ROOMS
+            </span>
           </button>
         </div>
       </div>
@@ -186,22 +197,25 @@ const AdminDashboard: React.FC = () => {
       ) : (
         <div className="space-y-12 animate-in fade-in duration-500">
           {/* DEDICATED CREATE SECTION */}
-          <section className="bg-black/20 p-10 rounded-lg border-2 border-dashed border-primary/30 flex flex-col items-center text-center gap-6">
-            <div className="bg-primary/10 p-5 rounded-full text-primary">
-              <Plus size={40} strokeWidth={3} />
+          <section className="bg-gradient-to-br from-accent-purple/15 to-accent-cyan/15 p-12 rounded-2xl border-2 border-dashed border-accent-purple/40 flex flex-col items-center text-center gap-8 shadow-lg shadow-accent-purple/10 hover:shadow-accent-purple/20 transition-all">
+            <div className="bg-accent-purple/20 p-6 rounded-full text-accent-purple">
+              <Plus size={44} strokeWidth={3} />
             </div>
             <div>
-              <h2 className="heading-3 text-2xl text-white mb-2 tracking-widest uppercase">Provision New Resource</h2>
-              <p className="text-muted text-sm uppercase font-bold tracking-widest">Initialize a new meeting space in the system infrastructure</p>
+              <h2 className="heading-3 text-3xl text-white mb-3 tracking-widest uppercase">Create New Room</h2>
+              <p className="text-muted text-sm uppercase font-bold tracking-widest">Add a new meeting space to the system</p>
             </div>
-            <button onClick={() => openRoomModal()} className="btn btn-primary px-12 py-4 font-black shadow-xl">
-              START PROVISIONING
+            <button onClick={() => openRoomModal()} className="btn btn-primary px-16 py-5 font-black shadow-xl hover:shadow-2xl transition-all text-base rounded-xl">
+              + CREATE ROOM
             </button>
           </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rooms.map(room => (
-              <div key={room.id} className="card group p-8 border-2 border-border hover:border-primary/40 transition-colors">
+            {rooms.map((room, index) => {
+              const cardVariants = ['card-purple', 'card-pink', 'card-purple'];
+              const cardClass = cardVariants[index % cardVariants.length];
+              return (
+              <div key={room.id} className={`card group p-8 border-2 border-border hover:border-primary/40 transition-colors ${cardClass} rounded-2xl`}>
                 <div className="flex justify-between items-start mb-8">
                   <div className="bg-primary/10 p-4 rounded text-primary border border-border">
                     <Building2 size={32} />
@@ -227,7 +241,8 @@ const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
