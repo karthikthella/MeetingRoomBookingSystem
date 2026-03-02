@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
-import { BookingStatus, Role } from '../types';
 import type { Room, Booking } from '../types';
 import { useAuth } from '../context/AuthContext';
-import { Plus, Edit, Trash, Check, X, Building2, Calendar, LayoutDashboard, Users, Clock, AlertCircle, ShieldAlert } from 'lucide-react';
+import { Plus, Edit, Trash, X, Building2, Calendar, LayoutDashboard, Users, ShieldAlert } from 'lucide-react';
+import ClickSpark from '../components/ClickSpark';
 
 const AdminDashboard: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -97,7 +97,7 @@ const AdminDashboard: React.FC = () => {
   if (loading) return <div className="text-center py-20 text-muted font-black tracking-widest">INITIALIZING DATA...</div>;
 
   return (
-    <div>
+    <ClickSpark sparkColor='#6366f1' sparkSize={12} sparkRadius={20} sparkCount={8} duration={500}>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 pb-8 border-b-2 border-border">
         <div>
           <h1 className="heading-1 flex items-center gap-4">
@@ -295,7 +295,7 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </ClickSpark>
   );
 };
 

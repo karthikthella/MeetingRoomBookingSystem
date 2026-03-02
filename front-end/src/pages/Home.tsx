@@ -3,6 +3,7 @@ import api from '../api/axios';
 import type { Room } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { Users, MapPin, Plus, X, Calendar as CalendarIcon, Clock, CheckCircle, AlertCircle, DoorOpen, Search, Filter } from 'lucide-react';
+import ClickSpark from '../components/ClickSpark';
 
 const Home: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -99,7 +100,7 @@ const Home: React.FC = () => {
   const uniqueFloors = Array.from(new Set(rooms.map(r => r.floorNumber))).sort();
 
   return (
-    <div>
+    <ClickSpark sparkColor='#6366f1' sparkSize={12} sparkRadius={20} sparkCount={8} duration={500}>
       <div className="mb-12">
         <h1 className="heading-1 flex items-center gap-4">
           <div className="p-3 bg-gradient-to-br from-accent-blue/20 to-accent-cyan/20 rounded-2xl">
@@ -121,18 +122,18 @@ const Home: React.FC = () => {
             <input
               type="text"
               placeholder="Search rooms by name..."
-              className="form-control w-full pl-10 border-accent-blue/30 focus:border-accent-blue"
+              className="form-control w-full pl-10 pr-12 border-accent-blue/30 focus:border-accent-blue"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-accent-blue hover:text-accent-dark transition-colors"
+              title="Toggle Filters"
+            >
+              <Filter size={18} />
+            </button>
           </div>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="btn btn-accent-cyan px-4 py-2 flex items-center gap-2"
-          >
-            <Filter size={18} />
-            Filters
-          </button>
         </div>
 
         {showFilters && (
@@ -300,7 +301,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </ClickSpark>
   );
 };
 

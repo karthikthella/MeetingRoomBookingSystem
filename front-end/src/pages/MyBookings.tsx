@@ -3,6 +3,7 @@ import api from '../api/axios';
 import type { Booking } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { Calendar, Clock, XCircle, Info, Hash, MapPin, Building2, Bookmark } from 'lucide-react';
+import ClickSpark from '../components/ClickSpark';
 
 const MyBookings: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -48,7 +49,7 @@ const MyBookings: React.FC = () => {
   if (loading) return <div className="text-center py-20 text-muted">Loading your bookings...</div>;
 
   return (
-    <div>
+    <ClickSpark sparkColor='#6366f1' sparkSize={12} sparkRadius={20} sparkCount={8} duration={500}>
       <div className="mb-12">
         <h1 className="heading-1 flex items-center gap-4">
           <Bookmark className="text-primary" size={48} />
@@ -116,7 +117,7 @@ const MyBookings: React.FC = () => {
           ))}
         </div>
       )}
-    </div>
+    </ClickSpark>
   );
 };
 

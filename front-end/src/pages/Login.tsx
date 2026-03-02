@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import { LogIn, Lock, User as UserIcon, AlertCircle } from 'lucide-react';
+import ClickSpark from '../components/ClickSpark';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -32,8 +33,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center py-12">
-      <div className="card w-full max-w-md p-10">
+    <ClickSpark sparkColor='#6366f1' sparkSize={12} sparkRadius={20} sparkCount={8} duration={500}>
+      <div className="flex items-center justify-center py-12">
+        <div className="card w-full max-w-md p-10">
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6 text-primary">
             <LogIn size={56} className="drop-shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
@@ -101,8 +103,9 @@ const Login: React.FC = () => {
             Register for free
           </Link>
         </div>
+        </div>
       </div>
-    </div>
+    </ClickSpark>
   );
 };
 
